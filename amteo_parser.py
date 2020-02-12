@@ -8,7 +8,7 @@ class Parser(QThread):
 
     progress = pyqtSignal(int)
     done = pyqtSignal()
-
+    error = pyqtSignal(str)
     def __init__(self, time_period, product_name):
         QThread.__init__(self)
         self.product_name = product_name
@@ -19,24 +19,27 @@ class Parser(QThread):
         product_name = self.product_name.replace(' ','+')
         self.url = f'http://openapi.clearspending.ru/restapi/v3/contracts/search/?daterange={self.time_period}&productsearch={product_name}&currentstage=EC&perpage=1'
         response = requests.get(self.url)
-        data = response.json()
-        number_of_contracts = int(data['contracts']['total'])
-        pages = int(number_of_contracts/50)
-        for page in range(1,pages+1):
-            self.url = f'http://openapi.clearspending.ru/restapi/v3/contracts/search/?daterange={self.time_period}&productsearch={product_name}&currentstage=EC&page={page}'
-            self.get(page)
-            self.progress.emit(page*10)
-        self.done.emit()
-        self.progress.emit(0)
+        try:
+            data = response.json()
+            number_of_contracts = int(data['contracts']['total'])
+            pages = int(number_of_contracts/50)
+            for page in range(1,pages+1):
+                self.url = f'http://openapi.clearspending.ru/restapi/v3/contracts/search/?daterange={self.time_period}&productsearch={product_name}&currentstage=EC&page={page}'
+                self.get(page)
+                self.progress.emit((page/pages)*100)
+            self.done.emit()
+            self.progress.emit(0)
+        except:
+            self.error.emit('Нет контрактов!')
+            pass
 
     def get(self,fname='response'):
         response = requests.get(self.url)
         if response.status_code == 200:
-            # print('Success!')
             pass
         elif response.status_code == 404:
             print('Not Found.')
-            raise Exception('ZHOPA')
+            raise Exception('Internet otstoy u vas, soryyyan')
 
         data = response.json()
 
@@ -53,7 +56,6 @@ class Parser(QThread):
         #Аттрибуты - дробление на участки данных
         self.contracts = [contract for contract in data['contracts']['data']]
         self.list_of_contracts += self.get_compressed_contracts()
-        # print(f'{self.number_of_contracts} were found')
 
     def get_compressed_contracts(self):
         contracts_data = []
