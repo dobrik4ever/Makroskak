@@ -2,6 +2,7 @@ import sys
 import design_main
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QPixmap
+from PyQt5 import QtGui
 from amteo_parser import Parser
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
@@ -19,11 +20,13 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         self.contracts_listWidget.itemClicked.connect(self.item_clicked)
         self.save_pushButton.clicked.connect(self.save_the_data)
         self.save_pushButton.setEnabled(False)
+        self.progressBar.setTextVisible(False)
         self.statusBar().showMessage('Ready')
         self.setWindowTitle('Makroskak_v1.0')    
         self.show()
 
     def search(self):
+        self.progressBar.setTextVisible(True)
         name = self.search_prodName_lineEdit.text()
         date_from = self.from_dateEdit.date().toPyDate().strftime('%d.%m.%Y')
         date_to = self.to_dateEdit.date().toPyDate().strftime('%d.%m.%Y')
@@ -32,15 +35,20 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         scn = Scenario(time_period, name)
         self.scenario_list.append(scn)
         self.scenario_list[-1].parser.progress.connect(self.progressBar.setValue)
-        self.contracts_listWidget.addItem(self.scenario_list[-1].shortcut)
+        self.scenario_list[-1].parser.done.connect(
+            lambda: self.contracts_listWidget.addItem(self.scenario_list[-1].shortcut)
+        )
+        self.scenario_list[-1].parser.done.connect(
+            lambda: self.progressBar.setTextVisible(False)
+        )
 
     def save_the_data(self):
         item = self.contracts_listWidget.selectedItems()[0]
         for i in self.scenario_list:
             if i.shortcut == item.text():
-                columns = list(item.list_of_contracts[0].keys())
+                columns = list(i.list_of_contracts[0].keys())
                 df = pd.DataFrame(columns=columns)
-                for i in item.list_of_contracts:
+                for i in i.list_of_contracts:
                     df = df.append(i,ignore_index=True)
                 df.to_excel(f'{i.shortcut}.xlsx')
                 break
@@ -59,7 +67,7 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
 
 
 from time import sleep
-class Scenario():
+class Scenario:
     def __init__(self,time_period, name):
         self.time_period = time_period
         self.name = name
@@ -68,7 +76,7 @@ class Scenario():
         self.list_of_contracts = []
         self.parser = Parser(time_period, name)
         self.parser.done.connect(self.get_other_data)
-        self.parser.start()        
+        self.parser.start()            
 
     def get_other_data(self):
         self.list_of_contracts = self.parser.list_of_contracts
@@ -90,6 +98,7 @@ class Scenario():
                     Y.append(float(contract['Цена']))  
             ax.scatter(X,Y,label=unit) 
         ax.legend()
+        plt.ylabel('Руб.')
         plt.xticks(rotation=45)
         plt.savefig('loc_.jpg',bbox_inches='tight')
         return 'loc_.jpg'
