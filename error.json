@@ -1,0 +1,296 @@
+{
+    "contractProcedure": {
+        "paymentDocuments": {
+            "attachment": {
+                "publishedContentId": "9CB8506FCB3300D0E0530A86120D5689",
+                "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=9CB8506FCB3300D0E0530A86120D5689",
+                "docRegNumber": "21660120850190001130013",
+                "docDescription": "сводный акт 2",
+                "fileName": "сводный акт 2.pdf"
+            }
+        },
+        "publishDate": "2020-01-22T14:57:24.756+03:00",
+        "executions": {
+            "execution": {
+                "payDoc": {
+                    "documentName": "платежный документ",
+                    "documentDate": "2020-01-20",
+                    "documentNum": "2"
+                },
+                "paidRUR": "7195079.20",
+                "improperExecutionText": "оплата",
+                "paid": "7195079.20",
+                "paidVATRUR": "0.00",
+                "currency": {
+                    "code": "RUB",
+                    "name": "Российский рубль"
+                },
+                "paidVAT": "0.00"
+            },
+            "finalStageExecution": "true",
+            "ordinalNumber": "2",
+            "stage": {
+                "endDate": "2019-12-31T00:00:00"
+            }
+        },
+        "okpd2okved2": "false",
+        "versionNumber": 0,
+        "printForm": {
+            "url": "https://zakupki.gov.ru/epz/contract/printForm/viewXml.html?contractProcedureId=113251930",
+            "docRegNumber": "21660120850190001130012"
+        },
+        "id": "113251930",
+        "@schemeVersion": "10.0"
+    },
+    "documentBase": "Протокол подведения итогов электронного аукциона № 0711200008319000050-3 от 19.04.2019",
+    "scan": [
+        {
+            "url": "http://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=92F776673D48008EE0530A86120D839D",
+            "docDescription": "доп согл 1",
+            "fileName": "доп согл 1.pdf"
+        },
+        {
+            "url": "http://zakupki.gov.ru/44fz/filestore/public/1.0/download/rpec/file.html?uid=871EABDB28D501DCE0530A86121F979A",
+            "docDescription": "Контракт № 81-2019.050 от 30.04.2019 08:47:43",
+            "fileName": "контракт 81-2019.05.doc"
+        }
+    ],
+    "number": "81-2019.050",
+    "currentContractStage": "EC",
+    "id": "52048741",
+    "fileVersion": "2019100100_006",
+    "placing": "12011",
+    "regionCode": "16",
+    "contractUrl": "http://zakupki.gov.ru/epz/contract/contractCard/common-info.html?reestrNumber=2166012085019000113",
+    "signDate": "2019-04-30T00:00:00",
+    "price": 7195079.2,
+    "placingWayCode": "EAP44",
+    "foundation": {
+        "fcsOrder": {
+            "notificationNumber": "0711200008319000050",
+            "purchaseCode": "192166012085016600100100670010000000",
+            "placing": "12011",
+            "lotNumber": "1"
+        }
+    },
+    "fz": "44",
+    "protocolDate": "2019-04-19",
+    "publishDate": "2019-09-23T16:36:15.764+03:00",
+    "regNum": "2166012085019000113",
+    "versionNumber": 2,
+    "schemaVersion": "9.2",
+    "execution": {
+        "startDate": "2019-04-30T00:00:00",
+        "endDate": "2019-12-31T00:00:00"
+    },
+    "searchRank": 200,
+    "customer": {
+        "kpp": "166001001",
+        "regNum": "07112000083",
+        "fullName": "ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ \"РЕСПУБЛИКАНСКИЙ КЛИНИЧЕСКИЙ ОНКОЛОГИЧЕСКИЙ ДИСПАНСЕР МИНИСТЕРСТВА ЗДРАВООХРАНЕНИЯ РЕСПУБЛИКИ ТАТАРСТАН\"",
+        "inn": "1660120850",
+        "postalAddress": "Российская Федерация, 420029, Татарстан Респ, Казань г, ТРАКТ СИБИРСКИЙ, 29"
+    },
+    "currency": {
+        "code": "RUB",
+        "name": "Российский рубль"
+    },
+    "suppliers": [
+        {
+            "kpp": "166101001",
+            "factualAddress": "420036, РЕСП ТАТАРСТАН 16, Г КАЗАНЬ, УЛ ЛЕВАНЕВСКОГО, ДОМ 2А, ОФИС 313",
+            "organizationName": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"МЕДИЦИНСКАЯ ТОРГОВАЯ КОМПАНИЯ \"ПУЛЬС\"",
+            "legalForm": {
+                "code": "12300",
+                "singularName": "Общества с ограниченной ответственностью"
+            },
+            "inn": "1661046461",
+            "participantType": "U",
+            "contactInfo": {
+                "middleName": "И",
+                "lastName": "Гадиева",
+                "firstName": "Г"
+            }
+        }
+    ],
+    "loadId": 1242,
+    "finances": {
+        "budgetLevel": {
+            "code": "20"
+        },
+        "budgetFunds": {
+            "stages": [
+                {
+                    "endDate": "2019-12-31T00:00:00",
+                    "payments": {
+                        "KBK": "395090901Б0150930244",
+                        "paymentYear": "2019",
+                        "paymentSumRUR": "6864876.56",
+                        "paymentMonth": "4",
+                        "paymentSum": "6864876.56"
+                    }
+                }
+            ]
+        },
+        "extrabudgetFunds": {
+            "stages": [
+                {
+                    "endDate": "2019-12-31T00:00:00",
+                    "payments": {
+                        "paymentSum": "330202.64",
+                        "paymentYear": "2019",
+                        "paymentSumRUR": "330202.64",
+                        "paymentMonth": "6"
+                    }
+                }
+            ]
+        },
+        "budget": {
+            "code": "11021430",
+            "name": "бюджет Республики Татарстан"
+        },
+        "extrabudget": {
+            "code": "70",
+            "name": "Средства автономных учреждений"
+        }
+    },
+    "mongo_id": "5da123bd878ec362b4c7f33d",
+    "products": [
+        {
+            "name": "Биопсийные прокладки к кассетам",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 3881.08,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455792",
+            "sum": 108670.24,
+            "quantity": "28"
+        },
+        {
+            "name": "Кассеты гистологические для принтера",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 58192.42,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455793",
+            "sum": 6168396.52,
+            "quantity": "106"
+        },
+        {
+            "name": "Заливочные кольца",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 2256.23,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455794",
+            "sum": 6768.69,
+            "quantity": "3"
+        },
+        {
+            "name": "Пробирка микроцентрифужная",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 315.64,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455795",
+            "sum": 15782.0,
+            "quantity": "50"
+        },
+        {
+            "name": "Наконечники 10 мкл",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 2588.19,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455796",
+            "sum": 38822.85,
+            "quantity": "15"
+        },
+        {
+            "name": "Заливочные кольца",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 2256.23,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455797",
+            "sum": 6768.69,
+            "quantity": "3"
+        },
+        {
+            "name": "Наконечники 300 мкл",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 1120.49,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455798",
+            "sum": 22409.8,
+            "quantity": "20"
+        },
+        {
+            "name": "Лента  термотрансверная",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 47744.45,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455799",
+            "sum": 143233.35,
+            "quantity": "3"
+        },
+        {
+            "name": "Биопсийные прокладки для кассет",
+            "OKEI": {
+                "code": "778",
+                "name": "упак"
+            },
+            "price": 1890.13,
+            "OKPD2": {
+                "code": "28.99.52.000",
+                "name": "Части прочего оборудования специального назначения"
+            },
+            "sid": "180455800",
+            "sum": 684227.06,
+            "quantity": "362"
+        }
+    ],
+    "printFormUrl": "http://zakupki.gov.ru/epz/contract/printForm/viewXml.html?contractInfoId=52048741"
+}
