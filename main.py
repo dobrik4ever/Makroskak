@@ -104,12 +104,12 @@ class Plotter:
     def __init__(self,scenario):
         self.scenario = scenario
         self.not_units = self.scenario.units
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(1,1,1)
         self.update()
 
-    def update(self):
-        fig = plt.figure()
-        ax = fig.add_subplot(1,1,1)
-        ax.grid()
+    def update(self):    
+        self.ax.grid()
 
         for unit in self.scenario.units:
             X = []
@@ -123,11 +123,12 @@ class Plotter:
                             a = [int(i) for i in contract['date'].split('-')]
                             date = Date(a[0],a[1],a[2])
                             X.append(date)
-                ax.scatter(X,Y,label=unit) 
-        ax.legend()
+                self.ax.scatter(X,Y,label=unit) 
+        self.ax.legend()
         plt.ylabel('Руб.')
         plt.xticks(rotation=45)
         plt.savefig('loc_.jpg',bbox_inches='tight')
+        plt.cla()
         return 'loc_.jpg'        
 
 from time import sleep
@@ -152,7 +153,7 @@ class Scenario:
         summary += f'Продукт: {self.name}\n'
         summary += f'Период: {self.time_period}\n'
         summary += f'Количество контрактов: {len(self.list_of_contracts)}\n'
-        summary += f'Средняя цена: {0}\n'
+            # summary += f'Средняя цена: {0}\n'
         summary += f'Ед. изм.: {self.units}\n'
         return summary
 
