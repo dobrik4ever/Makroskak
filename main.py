@@ -10,7 +10,10 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 from matplotlib import pyplot as plt
+import matplotlib.dates as mdates
 from datetime import date as Date
+import numpy as np
+
 #Гистологические кассеты
 class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
 
@@ -32,6 +35,7 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
 
     def search(self):
         self.progressBar.setTextVisible(True)
+        self.search_prodName_pushButton.setEnabled(False)
         name = self.search_prodName_lineEdit.text()
         date_from = self.from_dateEdit.date().toPyDate().strftime('%d.%m.%Y')
         date_to = self.to_dateEdit.date().toPyDate().strftime('%d.%m.%Y')
@@ -40,13 +44,13 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         scn = Scenario(time_period, name)
         self.scenario_list.append(scn)
         self.scenario_list[-1].parser.progress.connect(self.progressBar.setValue)
+
         self.scenario_list[-1].parser.done.connect(
-            lambda: self.contracts_listWidget.addItem(self.scenario_list[-1].shortcut)
-        )
+            lambda: self.contracts_listWidget.addItem(self.scenario_list[-1].shortcut))
         self.scenario_list[-1].parser.done.connect(
-            lambda: self.progressBar.setTextVisible(False)
-        )
+            lambda: self.progressBar.setTextVisible(False))
         self.scenario_list[-1].parser.error.connect(self.error_dialog)
+        self.search_prodName_pushButton.setEnabled(True)
 
     def error_dialog(self,msg):
         w = QtWidgets.QErrorMessage()
@@ -57,10 +61,11 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         item = self.contracts_listWidget.selectedItems()[0]
         for i in self.scenario_list:
             if i.shortcut == item.text():
+                print(type(i),i)
                 columns = list(i.list_of_contracts[0].keys())
                 df = pd.DataFrame(columns=columns)
-                for i in i.list_of_contracts:
-                    df = df.append(i,ignore_index=True)
+                for j in i.list_of_contracts:
+                    df = df.append(j,ignore_index=True)
                 df.to_excel(f'{i.shortcut}.xlsx')
                 break
         
@@ -72,6 +77,9 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
                 self.plotter = Plotter(scn)
                 self.update_list_of_units(scn.units)
                 self.year_price_qlabel.setPixmap(QPixmap(self.plotter.update()))
+                self.regression_checkBox.clicked.connect(
+                    lambda: self.plotter.set_regr(self.regression_checkBox.isChecked()))
+                self.regression_checkBox.clicked.connect(self.unit_item_checked)
                 break
 
     def update_list_of_units(self,units):
@@ -91,7 +99,7 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
             pass
         self.year_price_qlabel.setPixmap(QPixmap(self.plotter.update()))
 
-    def unit_item_checked(self,item):
+    def unit_item_checked(self):
         checked_items = []
         for i in range(self.units_listWidget.count()):
             if self.units_listWidget.item(i).checkState() == 2:
@@ -101,11 +109,12 @@ class Example(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
 
 class Plotter:
     
-    def __init__(self,scenario):
+    def __init__(self, scenario):
         self.scenario = scenario
         self.not_units = self.scenario.units
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(1,1,1)
+        self.regr_flag = False
         self.update()
 
     def update(self):    
@@ -123,6 +132,15 @@ class Plotter:
                             a = [int(i) for i in contract['date'].split('-')]
                             date = Date(a[0],a[1],a[2])
                             X.append(date)
+            if len(X) != 0:
+                if self.regr_flag:
+                    x = mdates.date2num(X)
+                    a = np.array([x,Y]).T
+                    df = pd.DataFrame(data = a, columns = ['date','val'])
+                    df = df.sort_values('date')
+                    p = np.polyfit(df['date'],df['val'],2)
+                    f = np.poly1d(p)
+                    self.ax.plot(df['date'],f(df['date']))
                 self.ax.scatter(X,Y,label=unit) 
         self.ax.legend()
         plt.ylabel('Руб.')
@@ -130,6 +148,9 @@ class Plotter:
         plt.savefig('loc_.jpg',bbox_inches='tight')
         plt.cla()
         return 'loc_.jpg'        
+
+    def set_regr(self, val):
+        self.regr_flag = val
 
 from time import sleep
 class Scenario:
@@ -145,8 +166,11 @@ class Scenario:
     def get_other_data(self):
         self.list_of_contracts = self.parser.list_of_contracts
         self.units = self.parser.units()
-        self.max_price = max([i['Цена'] for i in self.parser.list_of_contracts])
-        self.min_price = min([i['Цена'] for i in self.parser.list_of_contracts])
+        try:
+            self.max_price = max([i['Цена'] for i in self.parser.list_of_contracts])
+            self.min_price = min([i['Цена'] for i in self.parser.list_of_contracts])
+        except:
+            pass
 
     def summary(self):
         summary = ''
